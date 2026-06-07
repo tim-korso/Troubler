@@ -1,0 +1,15 @@
+pqa-app 全链路审计完成。结论：有条件通过 ⚠️
+
+产物层（Phase 2）全绿——CSS 13KB、data.js 766KB、类名齐全、构建完整。历史 bug A-1/A-14/A-3/A-7/A-9/A-17 均已修复。
+
+但发现 4 个 FAIL：
+F1. scrollTopBtn = 40×40px，低于 48px 触控下限
+F2. SPA 路由仍用自定义 viewStack，无 pushState（浏览器返回键完全失效，A-5 未修复）
+F3. conf-badge/tooltip 字号 13px，低于 14px 绝对下限
+F4. --color-text-muted (#777) 实际对比度 4.48:1，未通过 WCAG AA 4.5:1（tokens.css 注释声称 4.53:1 不准确）
+
+6 个 WARN：硬编码颜色/字号、tokens.css double-import、data.js 无加载失败提示、build-ios.sh 缺 pipefail。
+
+案例 15（A-5 返回按钮）是唯一完全未修复的历史 bug，需要在 App.jsx 中集成 pushState。
+
+完整报告：/Users/1234/Troubler/audit-reports/pqa-app-2026-06-07.md
