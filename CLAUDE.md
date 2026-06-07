@@ -32,6 +32,7 @@
 | **投资审计** | `.claude/rules/06-INVESTMENT-AUDIT.md` | 投资策略可靠性/回测质量/抄底审计/多Agent辩论 |
 | **测试审计** | `.claude/rules/07-TESTING-AUDIT.md` | 测试策略/分层模型/覆盖率有效性/flaky检测/突变测试 |
 | **Token 审计** | `.claude/rules/08-TOKEN-AUDIT.md` | Token消耗/上下文效率/缓存优化/CLAUDE.md精简/MCP工具审计 |
+| **项目初始化** | `.claude/rules/09-PROJECT-INIT.md` | 新项目启动必审/8项初始化清单/最小可行骨架生成 |
 
 置信度验证模块提供：
 - 主张类型分类（可检验事实/因果/统计/框架/观点）

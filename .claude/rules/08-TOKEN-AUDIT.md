@@ -102,6 +102,11 @@ Skills 渐进披露               20-40%     ★★☆
 子 Agent 隔离大任务            30-60%     ★★☆
   → 独立上下文，查完即释放
   → 不污染主对话
+
+data-schema 替代全量数据读取   99%+       ★☆☆
+  → 大 JSON/CSV/数据文件 → 写 data-schema.md
+  → AI 读 200 字节 schema 而非 3.2MB 数据
+  → 强制规则 T-1: 超过 100KB 的数据文件必须有 data-schema.md
 ```
 
 ### Layer 2: 处理层
