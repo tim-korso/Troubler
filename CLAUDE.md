@@ -20,50 +20,31 @@
 3. **产物审讯** — 不看代码看 dist/：hash 变了吗？CSS 进去了吗？内容密度 > 1% 吗？
 4. **社区校准** — 偏离标准方案就要有理由。没有理由的偏离 = bug
 
-## 扩展模块（按需加载）
+## 模块加载策略（双轨制）
 
-| 模块 | 文件 | 触发条件 |
-|------|------|---------|
-| **审计规则** | `.claude/rules/01-AUDIT.md` | 每次审计必加载 |
-| **Code Review 模式** | CLAUDE.md 内置 | 代码级审计 |
-| **置信度验证** | `.claude/rules/03-VERIFY-CLAIMS.md` | 主张验证/置信度评分/信息准确性审计 |
-| **多并发决策** | `.claude/rules/04-DECISION-PROTOCOL.md` | 多 Agent 协调/任务拆解/架构选择/并行度决策 |
-| **事件留痕** | `.claude/rules/05-EVENT-TRAIL.md` | 变更追溯/决策溯源/session log/ADR/工具审计日志 |
-| **投资审计** | `.claude/rules/06-INVESTMENT-AUDIT.md` | 投资策略可靠性/回测质量/抄底审计/多Agent辩论 |
-| **测试审计** | `.claude/rules/07-TESTING-AUDIT.md` | 测试策略/分层模型/覆盖率有效性/flaky检测/突变测试 |
-| **Token 审计** | `.claude/rules/08-TOKEN-AUDIT.md` | Token消耗/上下文效率/缓存优化/CLAUDE.md精简/MCP工具审计 |
-| **项目初始化** | `.claude/rules/09-PROJECT-INIT.md` | 新项目启动必审/8项初始化清单/最小可行骨架生成 |
+### 🟢 核心常驻（每次会话预加载，~800 行）
 
-置信度验证模块提供：
-- 主张类型分类（可检验事实/因果/统计/框架/观点）
-- 5 级证据来源分级（L1 实验数据 ← L5 作者断言）
-- 6 层验证管道（分解→文档内NLI→跨源三角验证→外部信号→逻辑因果→综合评分）
-- 多 Agent Delphi 共识协议
-- 置信度校准（Overconfidence Index + ECE）
+| 文件 | 行数 | 理由 |
+|------|------|------|
+| `01-AUDIT.md` | 57 | 四阶段审讯框架——每次审计必用 |
+| TROUBLER_FRAMEWORK.md | 267 | 23 案例库——模式匹配核心 |
+| GUARDRAILS.md | ~500 | 检查脚本——Phase 2 产物审讯必跑 |
 
-多并发决策模块提供：
-- DeepMind 量化架构选择器（5 种架构 × 任务属性匹配）
-- Anthropic 5 工作流模式决策树（Chaining/Routing/Parallelization/Orchestrator-Workers/Evaluator-Optimizer）
-- 多 Agent 并发调度（DAG 拆解 + Wave 调度 + 失败降级）
-- 3 模型共识协议（Opus + Sonnet + 多视角，仅关键判断启用）
-- 自适应放弃策略（Timely Abandonment）
+**总预加载：~800 行，省 60%（原 2142 行）**
 
-事件留痕模块提供：
-- 留痕五层模型（产物→变更→操作→会话→决策）
-- ADR 架构决策记录模板（Nygard+MADR 融合，Agent 可读）
-- Session Log 格式（对齐 Anthropic Long-Running Harness）
-- 工具审计日志（对齐 OWASP MCP08 标准）
-- 不可逆操作分级（Read Only / Reversible / Irreversible）
-- 被审项目留痕健康度评分（7 维度加权）
-- 快速留痕启动脚本
+### 🟡 懒加载模块（触发词命中时才读取）
 
-投资审计模块提供：
-- 策略分类学（趋势跟踪/均值回归/因子选股/事件驱动/AI黑箱）
-- AQR 196 策略量化审计标准（Sharpe ≤ 1.0 才是真策略）
-- Goldman Sachs 抄底决策树（5% 跌幅 + 多因子确认）
-- FinDebate 5 Agent 辩论协议（Bull/Bear/Quant/Macro/Risk）
-- 回测质量评分卡（8 维度加权）
-- FINSABER AI 生成策略专项审查（牛市保守/熊市激进检测）
+| 模块 | 触发词 |
+|------|--------|
+| `03-VERIFY-CLAIMS` | 「置信度」「主张验证」「证据分级」 |
+| `04-DECISION-PROTOCOL` | 「多 Agent」「并行」「架构选择」「拆任务」 |
+| `05-EVENT-TRAIL` | 「留痕」「ADR」「session log」「审计日志」 |
+| `06-INVESTMENT-AUDIT` | 「投资」「策略」「回测」「抄底」 |
+| `07-TESTING-AUDIT` | 「测试」「flaky」「覆盖率」「突变测试」 |
+| `08-TOKEN-AUDIT` | 「token」「省 token」「上下文」「缓存」 |
+| `09-PROJECT-INIT` | 「新项目」「初始化」「开工」 |
+
+**规则**：命中触发词 → 读对应模块 → 用完即弃。同 session 不重复读。
 
 ## 案例库（核心资产）
 截至 2026-06-07，已有 18 个确认 bug 案例：
