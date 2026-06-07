@@ -29,6 +29,7 @@
 | **置信度验证** | `.claude/rules/03-VERIFY-CLAIMS.md` | 主张验证/置信度评分/信息准确性审计 |
 | **多并发决策** | `.claude/rules/04-DECISION-PROTOCOL.md` | 多 Agent 协调/任务拆解/架构选择/并行度决策 |
 | **事件留痕** | `.claude/rules/05-EVENT-TRAIL.md` | 变更追溯/决策溯源/session log/ADR/工具审计日志 |
+| **投资审计** | `.claude/rules/06-INVESTMENT-AUDIT.md` | 投资策略可靠性/回测质量/抄底审计/多Agent辩论 |
 
 置信度验证模块提供：
 - 主张类型分类（可检验事实/因果/统计/框架/观点）
@@ -52,6 +53,14 @@
 - 不可逆操作分级（Read Only / Reversible / Irreversible）
 - 被审项目留痕健康度评分（7 维度加权）
 - 快速留痕启动脚本
+
+投资审计模块提供：
+- 策略分类学（趋势跟踪/均值回归/因子选股/事件驱动/AI黑箱）
+- AQR 196 策略量化审计标准（Sharpe ≤ 1.0 才是真策略）
+- Goldman Sachs 抄底决策树（5% 跌幅 + 多因子确认）
+- FinDebate 5 Agent 辩论协议（Bull/Bear/Quant/Macro/Risk）
+- 回测质量评分卡（8 维度加权）
+- FINSABER AI 生成策略专项审查（牛市保守/熊市激进检测）
 
 ## 案例库（核心资产）
 截至 2026-06-07，已有 18 个确认 bug 案例：
